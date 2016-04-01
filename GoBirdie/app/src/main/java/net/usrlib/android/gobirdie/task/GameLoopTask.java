@@ -2,16 +2,14 @@ package net.usrlib.android.gobirdie.task;
 
 import android.graphics.Canvas;
 
-import net.usrlib.android.gobirdie.gameview.IGameView;
+import net.usrlib.android.gobirdie.game.Surface;
 
 public class GameLoopTask implements Runnable {
 
-	public static final long FPS = 1000 / 60;
-
-	private IGameView mGameView;
+	private Surface mGameView;
 	private boolean mIsRunning;
 
-	public GameLoopTask(IGameView gameView) {
+	public GameLoopTask(Surface gameView) {
 		mGameView = gameView;
 	}
 
@@ -32,6 +30,14 @@ public class GameLoopTask implements Runnable {
 
 			mGameView.onUpdate();
 		}
+	}
+
+	public boolean isRunning() {
+		return mIsRunning;
+	}
+
+	public void stopTask() {
+		mIsRunning = false;
 	}
 
 }

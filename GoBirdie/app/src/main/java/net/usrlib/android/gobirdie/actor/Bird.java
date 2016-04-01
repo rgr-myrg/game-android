@@ -36,9 +36,9 @@ public class Bird extends GameObject {
 	private int degrees = 0;
 	private int count = 0;
 
-	private final int xRightBoundary;
-	private final int floorBoundary;
-	private final int halfScreenBoundary;
+	private int xRightBoundary;
+	private int floorBoundary;
+	private int halfScreenBoundary;
 
 	private final Matrix mirrorMatrix = new Matrix();
 
@@ -47,17 +47,14 @@ public class Bird extends GameObject {
 	private BirdBitMap mBitMap;
 
 	public Bird(Context context) {
-
 		loadBitMaps(context);
-
-		xRightBoundary = Stage.getWidth() - mBitMap.right.getWidth() - xOffset;
-		floorBoundary  = Stage.getHeight() - mBitMap.down.getHeight();
-		halfScreenBoundary = Stage.getHeight() / 2;
-	
-		//reset();
 	}
 
 	public void reset() {
+		xRightBoundary = Stage.getWidth() - mBitMap.right.getWidth() - xOffset;
+		floorBoundary  = Stage.getHeight() - mBitMap.down.getHeight();
+		halfScreenBoundary = Stage.getHeight() / 2;
+
 		set(
 				Stage.getWidth() / 2 - mBitMap.right.getWidth() / 2,
 				Stage.getHeight() - mBitMap.right.getHeight() * 4,

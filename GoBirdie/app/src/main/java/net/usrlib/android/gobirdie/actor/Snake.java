@@ -17,8 +17,8 @@ public class Snake extends GameObject {
 
 	private final int sAnimationFrameRate = 10;
 
-	private final int xRightBoundary;
-	private final int xLeftBoundary;
+	private int xRightBoundary;
+	private int xLeftBoundary;
 
 	private int xOffset = VELOCITY_X;
 	private int maxElapsed;
@@ -33,9 +33,6 @@ public class Snake extends GameObject {
 	public Snake(Context context) {
 		loadAnimationFrames(context.getResources());
 
-		xRightBoundary = Stage.getWidth() + mAnimationFrames.getTopFrame().getWidth() * 2;
-		xLeftBoundary  = ( -mAnimationFrames.getTopFrame().getWidth() * 2 );
-
 		//reset();
 	}
 
@@ -49,6 +46,9 @@ public class Snake extends GameObject {
 	}
 
 	public void reset() {
+		xRightBoundary = Stage.getWidth() + mAnimationFrames.getTopFrame().getWidth() * 2;
+		xLeftBoundary  = ( -mAnimationFrames.getTopFrame().getWidth() * 2 );
+
 		isTurningLeft = false;
 		isOffStage    = false;
 		maxElapsed    = NumUtil.getRandInt(1, 3) * TIME_OFFSET;

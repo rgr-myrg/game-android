@@ -22,7 +22,7 @@ public class Monkey extends GameObject {
 	private int iterationCount = 0;
 	private int maxIterations;
 	private int maxElapsed;
-	private final int xRightBoundary;
+	private int xRightBoundary;
 
 	private boolean isOffStage;
 
@@ -34,8 +34,6 @@ public class Monkey extends GameObject {
 		evenNums[0] = 1;
 		evenNums[1] = 2;
 		evenNums[2] = 4;
-
-		xRightBoundary = Stage.getWidth() - mAnimationFrames.getTopFrame().getWidth();
 
 		//reset();
 	}
@@ -50,6 +48,7 @@ public class Monkey extends GameObject {
 	}
 
 	public void reset() {
+		xRightBoundary = Stage.getWidth() - mAnimationFrames.getTopFrame().getWidth();
 		isOffStage     = false;
 		iterationCount = 0;
 		maxIterations  = NumUtil.getRandIntFromList(evenNums);

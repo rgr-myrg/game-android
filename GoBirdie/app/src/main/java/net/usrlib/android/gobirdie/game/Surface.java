@@ -63,13 +63,13 @@ public class Surface extends SurfaceView {
 
 	public void onSurfaceDestroyed() {
 		Log.i("SURFACE", "onSurfaceDestroyed!!!");
+		Stage.stopGameLoop();
 
 	}
 
 	public boolean onTouchEvent( MotionEvent event ) {
 		performClick();
 
-		Log.d("SURFACE", "onTouchEvent");
 		if (mIsGameOver) {
 			// Restart Game
 			mHasSurfaceCreated = false;
@@ -85,6 +85,7 @@ public class Surface extends SurfaceView {
 //			Facade.startGameLoop();
 //		}
 
+		Stage.startGameLoop();
 		Actor.sBird.onTap();
 
 		return true;
@@ -93,12 +94,6 @@ public class Surface extends SurfaceView {
 	public void onCanvasDraw(Canvas canvas) {
 		canvas.drawColor(0, PorterDuff.Mode.CLEAR);
 		Actor.drawActors(canvas);
-
-//		Actor.sBird.draw(canvas);
-//		Actor.sFruit.draw(canvas);
-//		Actor.sEagle.draw(canvas);
-//		Actor.sSnake.draw(canvas);
-//		Actor.sMonkey.draw(canvas);
 	}
 
 	public void onUpdate() {
@@ -114,12 +109,11 @@ public class Surface extends SurfaceView {
 							return;
 						}
 
-						if (Actor.sBird.intersectsWith( Actor.sFruit) && !Actor.sBird.hasFruit()) {
-//						Facade.SCORE++;
-//						Facade.updateScore();
+						if (Actor.sBird.intersectsWith(Actor.sFruit) && !Actor.sBird.hasFruit()) {
+							Stage.updateScore();
 
 							Sound.playTone1();
-							Actor.sBird.setHasFruit( true );
+							Actor.sBird.setHasFruit(true);
 						}
 
 						if (Actor.sBird.hasFruit()) {
@@ -127,8 +121,7 @@ public class Surface extends SurfaceView {
 						}
 
 						if (Actor.sBird.intersectsWith(Actor.sBirdhouse) && Actor.sBird.hasFruit()) {
-//						Facade.SCORE++;
-//						Facade.updateScore();
+							Stage.updateScore();
 
 							Sound.playTone2();
 							//birdhouse.disable();
