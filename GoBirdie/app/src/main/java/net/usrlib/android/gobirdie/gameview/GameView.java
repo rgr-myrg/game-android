@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import net.usrlib.android.gobirdie.asset.Actor;
+import net.usrlib.android.gobirdie.game.Actor;
 import net.usrlib.android.gobirdie.asset.Sound;
 
 // ToDo: Replace Facade Methods!!! Commenting out for now.

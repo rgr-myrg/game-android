@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
 import net.usrlib.android.gobirdie.asset.Image;
-import net.usrlib.android.gobirdie.asset.Stage;
+import net.usrlib.android.gobirdie.game.Stage;
 import net.usrlib.android.gobirdie.object.GameObject;
 import net.usrlib.android.gobirdie.util.NumUtil;
 
@@ -23,7 +23,7 @@ public class Fruit extends GameObject {
 		fruits.add(Image.sOrange);
 		fruits.add(Image.sPear);
 
-		reset();
+		//reset();
 	}
 
 	public void reset() {

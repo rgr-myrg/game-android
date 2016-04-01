@@ -1,5 +1,6 @@
 package net.usrlib.android.gobirdie;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -7,12 +8,12 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
-import net.usrlib.android.gobirdie.asset.Actor;
 import net.usrlib.android.gobirdie.asset.Font;
 import net.usrlib.android.gobirdie.asset.Image;
 import net.usrlib.android.gobirdie.asset.Music;
 import net.usrlib.android.gobirdie.asset.Sound;
 import net.usrlib.android.gobirdie.event.LoadEvent;
+import net.usrlib.android.gobirdie.game.Actor;
 import net.usrlib.android.gobirdie.settings.Settings;
 import net.usrlib.pattern.TinyEvent;
 
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 	public void startGameActivity(View view) {
 		Log.d("MAIN", "startGameActivity");
 		Sound.playTone1();
+		startActivity(new Intent(this, GameActivity.class));
 	}
 
 	public void startAboutActivity(View view) {

@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import net.usrlib.android.gobirdie.R;
-import net.usrlib.android.gobirdie.asset.Stage;
+import net.usrlib.android.gobirdie.game.Stage;
 import net.usrlib.android.gobirdie.object.GameObject;
 import net.usrlib.android.gobirdie.util.NumUtil;
 
@@ -37,7 +37,7 @@ public class Monkey extends GameObject {
 
 		xRightBoundary = Stage.getWidth() - mAnimationFrames.getTopFrame().getWidth();
 
-		reset();
+		//reset();
 	}
 
 	public void loadAnimationFrames(Resources resources) {

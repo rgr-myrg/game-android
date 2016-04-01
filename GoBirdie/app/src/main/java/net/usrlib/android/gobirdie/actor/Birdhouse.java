@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import net.usrlib.android.gobirdie.asset.Stage;
+import net.usrlib.android.gobirdie.game.Stage;
 import net.usrlib.android.gobirdie.object.GameObject;
 
 public class Birdhouse extends GameObject {
@@ -13,6 +13,9 @@ public class Birdhouse extends GameObject {
 	private static int mBoxBounds = 50;
 
 	public Birdhouse() {
+	}
+
+	public void reset() {
 		if ( Stage.getWidth() > 520 ) {
 			mBoxBounds = 100;
 		}
@@ -24,7 +27,6 @@ public class Birdhouse extends GameObject {
 				mBoxBounds
 		);
 	}
-
 //	public void disable() {
 //		active = false;
 //	}

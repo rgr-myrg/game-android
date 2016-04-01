@@ -7,7 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 
 import net.usrlib.android.gobirdie.R;
-import net.usrlib.android.gobirdie.asset.Stage;
+import net.usrlib.android.gobirdie.game.Stage;
 import net.usrlib.android.gobirdie.object.GameObject;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class Bird extends GameObject {
 		floorBoundary  = Stage.getHeight() - mBitMap.down.getHeight();
 		halfScreenBoundary = Stage.getHeight() / 2;
 	
-		reset();
+		//reset();
 	}
 
 	public void reset() {
