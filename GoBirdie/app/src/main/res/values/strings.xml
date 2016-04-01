@@ -1,0 +1,21 @@
+<resources>
+	<string name="app_name">GoBirdie!</string>
+
+	<string name="score_default">0</string>
+	<string name="score_label">Score:</string>
+	<string name="score_best">Best:</string>
+	<string name="score_lifetime">Lifetime:</string>
+
+	<string name="btn_play">Play!</string>
+	<string name="btn_store">Store</string>
+	<string name="btn_music">Music OFF</string>
+	<string name="btn_sound">Sound OFF</string>
+	<string name="btn_rate">Rate</string>
+	<string name="btn_about">About</string>
+	<string name="btn_home">Home</string>
+
+	<string name="text_replay">Tap to Replay</string>
+
+	<string name="txtOptsMusicLabel">Music</string>
+	<string name="txtOptsSoundLabel">Sound Fx</string>
+</resources>
