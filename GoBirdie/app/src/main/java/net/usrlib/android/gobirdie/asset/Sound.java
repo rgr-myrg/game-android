@@ -6,13 +6,12 @@ import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
 
-import net.usrlib.android.gobirdie.event.LoadEvent;
+import net.usrlib.android.gobirdie.event.GameEvent;
 import net.usrlib.android.gobirdie.settings.Settings;
 
 import java.io.IOException;
 
 public final class Sound {
-
 	private static final int MAX_STREAMS = 5;
 	private static final int MAX_PLAY_COUNT = 5;
 
@@ -54,7 +53,7 @@ public final class Sound {
 					new SoundPool.OnLoadCompleteListener() {
 						public void onLoadComplete( SoundPool soundPool, int sampleId, int status ) {
 							sIsReady = true;
-							LoadEvent.SoundLoaded.notifySuccess();
+							GameEvent.SoundLoaded.notifySuccess();
 						}
 					}
 			);
@@ -69,7 +68,7 @@ public final class Sound {
 		} catch (IOException e) {
 
 			sIsReady = false;
-			LoadEvent.SoundLoaded.notifyError(e.getMessage());
+			GameEvent.SoundLoaded.notifyError(e.getMessage());
 			e.printStackTrace();
 
 		}
@@ -135,5 +134,4 @@ public final class Sound {
 				}
 		).start();
 	}
-
 }

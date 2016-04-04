@@ -11,11 +11,12 @@ import net.usrlib.android.gobirdie.object.GameObject;
 import net.usrlib.android.gobirdie.util.NumUtil;
 
 public class Monkey extends GameObject {
-	private static final int VELOCITY_X  = 5;
+	private static final int DEFAULT_VELOCITY = 5;
 	private static final int TIME_OFFSET = 100;
 	private final int sAnimationFrameRate = 10;
 
-	private int xOffset = VELOCITY_X;
+	private int velocity = 5;
+	private int xOffset = DEFAULT_VELOCITY;
 
 	private int[] evenNums = new int[4];
 
@@ -69,13 +70,13 @@ public class Monkey extends GameObject {
 		// Prevent Calculations while off stage
 		if ( !isOffStage ) {
 			if ( iterationCount >= maxIterations ) {
-				xOffset = VELOCITY_X;
+				xOffset = velocity;
 	
 			} else {
 				if ( x > xRightBoundary ) {
-					xOffset = ( -VELOCITY_X );
+					xOffset = ( -velocity);
 				} else if (x + xOffset < 0) {
-					xOffset = VELOCITY_X;
+					xOffset = velocity;
 					iterationCount++;
 				}
 			}
@@ -92,12 +93,11 @@ public class Monkey extends GameObject {
 			}
 		}
 
-		updatePosition( x, y );
+		updatePosition(x, y);
 	}
 
 	public void draw ( Canvas canvas ) {
 		if ( isOffStage ) return;
-		canvas.drawBitmap( mAnimationFrames.getCurrentFrame(), x , y, null );
+		canvas.drawBitmap(mAnimationFrames.getCurrentFrame(), x, y, null);
 	}
-
 }

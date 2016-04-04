@@ -16,6 +16,7 @@ import java.util.List;
 public class Bird extends GameObject {
 	private static final int VELOCITY_X = 5;
 	private static final int VELOCITY_Y = 7;
+
 	private static final int FALL_VELOCITY  = 15;
 	private static final int JUMP_DISTANCE  = 25;
 	private static final int ROTATE_DEGREES = 45;
@@ -240,6 +241,5 @@ public class Bird extends GameObject {
 			this.left  = BitmapFactory.decodeResource(view.getResources(), left);
 			this.down  = BitmapFactory.decodeResource(view.getResources(), down);
 		}
-
 	}
 }

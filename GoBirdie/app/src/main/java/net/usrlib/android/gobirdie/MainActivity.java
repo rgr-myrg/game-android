@@ -12,13 +12,12 @@ import net.usrlib.android.gobirdie.asset.Font;
 import net.usrlib.android.gobirdie.asset.Image;
 import net.usrlib.android.gobirdie.asset.Music;
 import net.usrlib.android.gobirdie.asset.Sound;
-import net.usrlib.android.gobirdie.event.LoadEvent;
+import net.usrlib.android.gobirdie.event.GameEvent;
 import net.usrlib.android.gobirdie.game.Actor;
 import net.usrlib.android.gobirdie.settings.Settings;
 import net.usrlib.pattern.TinyEvent;
 
 public class MainActivity extends AppCompatActivity {
-
 	private Button mMusicButton = null;
 	private Button mSoundButton = null;
 
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void addListeners() {
-		LoadEvent.FontLoaded.addListenerOnce(
+		GameEvent.FontLoaded.addListenerOnce(
 				new TinyEvent.Listener() {
 					@Override
 					public void onSuccess(Object data) {
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 		Actor.loadActors(getApplicationContext());
 	}
 
-	// Invoked when LoadEvent.FontLoaded.notifySuccess is triggered
+	// Invoked when GameEvent.FontLoaded.notifySuccess is triggered
 	private void setButtonsTypeface() {
 		((Button) findViewById(R.id.btnPlay)).setTypeface(Font.sTypewriter);
 		((Button) findViewById(R.id.btnAbout)).setTypeface(Font.sTypewriter);
@@ -120,5 +119,4 @@ public class MainActivity extends AppCompatActivity {
 				flag ? "Sound ON" : "Sound OFF"
 		);
 	}
-
 }

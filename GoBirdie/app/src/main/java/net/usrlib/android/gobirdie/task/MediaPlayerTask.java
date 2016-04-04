@@ -7,7 +7,6 @@ import android.util.Log;
 import java.io.IOException;
 
 public class MediaPlayerTask implements Runnable {
-
 	public static final String NAME = MediaPlayerTask.class.getSimpleName();
 
 	private MediaPlayer mMediaPlayer = null;
@@ -108,5 +107,4 @@ public class MediaPlayerTask implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
 }

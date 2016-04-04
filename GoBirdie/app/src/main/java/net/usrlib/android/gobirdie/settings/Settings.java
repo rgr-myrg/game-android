@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public final class Settings {
-
 	private static final String sMusicKey = "music";
 	private static final String sSoundKey = "sound";
 	private static final String sHighScoreKey = "highscore";
@@ -83,5 +82,4 @@ public final class Settings {
 //	private static final int getInt(Activity activity, String key) {
 //		return sPreferences.getInt(key, 0);
 //	}
-
 }

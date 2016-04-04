@@ -40,5 +40,4 @@ public class AnimationFrames {
 
 		return mFrames.get(mCurrentFrame);
 	}
-
 }

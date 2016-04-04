@@ -10,7 +10,6 @@ import net.usrlib.android.gobirdie.task.MediaPlayerTask;
 import java.io.IOException;
 
 public final class Music {
-
 	private static AssetFileDescriptor sFileTrack;
 	private static MediaPlayerTask sMediaPlayerTask;
 
@@ -61,5 +60,4 @@ public final class Music {
 
 		sMediaPlayerTask.pause();
 	}
-
 }

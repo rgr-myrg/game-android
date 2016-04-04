@@ -8,7 +8,6 @@ import net.usrlib.android.gobirdie.game.Stage;
 import net.usrlib.android.gobirdie.game.Surface;
 
 public class GameActivity extends Activity {
-
 	private RelativeLayout.LayoutParams mLayoutParams;
 	private Surface mSurface;
 
@@ -28,5 +27,4 @@ public class GameActivity extends Activity {
 
 		addContentView(mSurface, mLayoutParams);
 	}
-
 }

@@ -31,5 +31,4 @@ public class Image {
 		sBirdLeft = BitmapFactory.decodeResource(resources, R.drawable.bird_left);
 		sBirdDown = BitmapFactory.decodeResource(resources, R.drawable.bird_down);
 	}
-
 }

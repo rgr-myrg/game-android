@@ -11,11 +11,12 @@ import net.usrlib.android.gobirdie.object.GameObject;
 import net.usrlib.android.gobirdie.util.NumUtil;
 
 public class Eagle extends GameObject {
+	private final int DEFAULT_VELOCITY = 3;
 	private final int sAnimationFrameRate = 15;
 	private int xRightBoundary;
 	private int yTopBoundary;
 
-	private int velocity = 3;
+	private int velocity = DEFAULT_VELOCITY;
 	private int offsetX, offsetY;
 
 	public Eagle(Context context) {
@@ -78,7 +79,6 @@ public class Eagle extends GameObject {
 	}
 
 	public void draw ( Canvas canvas ) {
-		canvas.drawBitmap( mAnimationFrames.getCurrentFrame(), x , y, null );
+		canvas.drawBitmap(mAnimationFrames.getCurrentFrame(), x, y, null);
 	}
-
 }

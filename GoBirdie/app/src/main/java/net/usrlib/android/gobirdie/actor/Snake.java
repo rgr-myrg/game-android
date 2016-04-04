@@ -12,7 +12,7 @@ import net.usrlib.android.gobirdie.object.GameObject;
 import net.usrlib.android.gobirdie.util.NumUtil;
 
 public class Snake extends GameObject {
-	private static final int VELOCITY_X  = 2;
+	private static final int DEFAULT_VELOCITY = 2;
 	private static final int TIME_OFFSET = 100;
 
 	private final int sAnimationFrameRate = 10;
@@ -20,7 +20,8 @@ public class Snake extends GameObject {
 	private int xRightBoundary;
 	private int xLeftBoundary;
 
-	private int xOffset = VELOCITY_X;
+	private int velocity = DEFAULT_VELOCITY;
+	private int xOffset = velocity;
 	private int maxElapsed;
 
 	private boolean isTurningLeft;
@@ -57,7 +58,7 @@ public class Snake extends GameObject {
 		final Bitmap topFrame = mAnimationFrames.getTopFrame();
 
 		set(
-				( -topFrame.getWidth() * 2 ),
+				(-topFrame.getWidth() * 2),
 				Stage.getHeight() - topFrame.getHeight(),
 				topFrame.getWidth(),
 				topFrame.getHeight()
@@ -68,12 +69,12 @@ public class Snake extends GameObject {
 		if ( !isOffStage ) {
 			if ( x > xRightBoundary ) {
 				//crossed right boundary
-				xOffset = ( -VELOCITY_X );
+				xOffset = ( -velocity);
 				isTurningLeft = true;
 
 			} else if ( x < xLeftBoundary ) {
 				//crossed left boundary
-				xOffset = VELOCITY_X;
+				xOffset = velocity;
 				isTurningLeft = false;
 				isOffStage = true;
 			}
@@ -86,7 +87,7 @@ public class Snake extends GameObject {
 			}
 		}
 
-		updatePosition( x, y );
+		updatePosition(x, y);
 	}
 
 	public void draw( Canvas canvas ) {

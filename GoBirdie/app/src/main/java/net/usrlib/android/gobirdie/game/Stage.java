@@ -8,16 +8,15 @@ import android.widget.TextView;
 
 import net.usrlib.android.gobirdie.R;
 import net.usrlib.android.gobirdie.asset.Font;
-import net.usrlib.android.gobirdie.task.GameLoopTask;
+import net.usrlib.android.gobirdie.task.GameTask;
 
 public final class Stage {
-
 	public static Paint sPaint = new Paint();
 
 	private static Activity sActivity;
 	private static View sGameLayout;
 	private static TextView sScoreView;
-	private static GameLoopTask sGameLoopTask;
+	private static GameTask sGameTask;
 
 	private static int sScore = 0;
 	private static int sWidth;
@@ -37,10 +36,11 @@ public final class Stage {
 		sWidth = view.getWidth();
 		sHeight = view.getHeight();
 
-		sPaint.setDither( true );
+		sPaint.setDither(true);
 		sPaint.setFilterBitmap(true);
 
-		sGameLoopTask = new GameLoopTask(view);
+		sGameTask = new GameTask(view);
+
 		Log.i("STAGE", "initWithSurfaceView " + String.valueOf(getWidth()) + "x" + String.valueOf(getHeight()));
 	}
 
@@ -71,15 +71,16 @@ public final class Stage {
 	}
 
 	public static final void startGameLoop() {
-		if (sGameLoopTask == null || sGameLoopTask.isRunning()) {
+		if (sGameTask == null || sGameTask.isRunning()) {
 			return;
 		}
 
-		new Thread(sGameLoopTask).start();
+		sGameTask.init();
+		new Thread(sGameTask).start();
 	}
 
 	public static final void stopGameLoop() {
-		sGameLoopTask.stopTask();
+		sGameTask.stopTask();
 	}
 
 	public static final void updateScore() {
@@ -93,5 +94,4 @@ public final class Stage {
 				}
 		);
 	}
-
 }
