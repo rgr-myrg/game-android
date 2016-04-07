@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
-import net.usrlib.android.gobirdie.game.Stage;
 import net.usrlib.android.gobirdie.game.Surface;
+import net.usrlib.android.gobirdie.game.World;
 
 public class GameActivity extends Activity {
 	private RelativeLayout.LayoutParams mLayoutParams;
@@ -16,7 +16,7 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 
-		Stage.loadContentView(this);
+		World.loadContentView(this);
 
 		mSurface = new Surface(getApplicationContext());
 

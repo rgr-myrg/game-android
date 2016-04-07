@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import net.usrlib.android.gobirdie.R;
-import net.usrlib.android.gobirdie.game.Stage;
+import net.usrlib.android.gobirdie.game.World;
 import net.usrlib.android.gobirdie.object.GameObject;
 import net.usrlib.android.gobirdie.util.NumUtil;
 
@@ -44,13 +44,13 @@ public class Eagle extends GameObject {
 		final Bitmap topFrame = mAnimationFrames.getTopFrame();
 
 		set(
-				NumUtil.getRandInt(0, Stage.getWidth() - topFrame.getWidth() * 2),
+				NumUtil.getRandInt(0, World.getWidth() - topFrame.getWidth() * 2),
 				0 - topFrame.getHeight() * 2,
 				topFrame.getWidth(),
 				topFrame.getHeight()
 		);
 
-		if ( Stage.getWidth() > 520 ) {
+		if ( World.getWidth() > 520 ) {
 			velocity = 5;
 		}
 
@@ -59,7 +59,7 @@ public class Eagle extends GameObject {
 	}
 
 	public void update() {
-		if ( y > Stage.getHeight() - mAnimationFrames.getTopFrame().getHeight() - offsetY ) {
+		if ( y > World.getHeight() - mAnimationFrames.getTopFrame().getHeight() - offsetY ) {
 			offsetY = ( -velocity );
 		} else if ( y < yTopBoundary ) {
 			offsetY = velocity;
@@ -67,7 +67,7 @@ public class Eagle extends GameObject {
 	
 		y = (int) (y + offsetY);
 
-		if ( x > Stage.getWidth() ) {
+		if ( x > World.getWidth() ) {
 			offsetX = ( -velocity );
 		} else if ( x < xRightBoundary ) {
 			offsetX = velocity;

@@ -7,7 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 
 import net.usrlib.android.gobirdie.R;
-import net.usrlib.android.gobirdie.game.Stage;
+import net.usrlib.android.gobirdie.game.World;
 import net.usrlib.android.gobirdie.object.GameObject;
 import net.usrlib.android.gobirdie.util.NumUtil;
 
@@ -47,7 +47,7 @@ public class Snake extends GameObject {
 	}
 
 	public void reset() {
-		xRightBoundary = Stage.getWidth() + mAnimationFrames.getTopFrame().getWidth() * 2;
+		xRightBoundary = World.getWidth() + mAnimationFrames.getTopFrame().getWidth() * 2;
 		xLeftBoundary  = ( -mAnimationFrames.getTopFrame().getWidth() * 2 );
 
 		isTurningLeft = false;
@@ -59,7 +59,7 @@ public class Snake extends GameObject {
 
 		set(
 				(-topFrame.getWidth() * 2),
-				Stage.getHeight() - topFrame.getHeight(),
+				World.getHeight() - topFrame.getHeight(),
 				topFrame.getWidth(),
 				topFrame.getHeight()
 		);

@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import net.usrlib.android.gobirdie.game.Stage;
+import net.usrlib.android.gobirdie.game.World;
 import net.usrlib.android.gobirdie.object.GameObject;
 
 public class Birdhouse extends GameObject {
@@ -16,13 +16,13 @@ public class Birdhouse extends GameObject {
 	}
 
 	public void reset() {
-		if ( Stage.getWidth() > 520 ) {
+		if ( World.getWidth() > 520 ) {
 			mBoxBounds = 100;
 		}
 
 		set(
-				Stage.getWidth() / 2 - mBoxBounds / 2,
-				Stage.getHeight() - Stage.getHeight() / 5,
+				World.getWidth() / 2 - mBoxBounds / 2,
+				World.getHeight() - World.getHeight() / 5,
 				mBoxBounds,
 				mBoxBounds
 		);
@@ -38,8 +38,8 @@ public class Birdhouse extends GameObject {
 	public void draw( Canvas canvas ) {
 //		Makes Collider Visible. Testing Only
 		Rect r = new Rect( minX, minY, maxX, maxY);
-		Stage.sPaint.setStyle(Paint.Style.STROKE);
-		Stage.sPaint.setColor(Color.RED);
-		canvas.drawRect(r, Stage.sPaint);
+		World.sPaint.setStyle(Paint.Style.STROKE);
+		World.sPaint.setColor(Color.RED);
+		canvas.drawRect(r, World.sPaint);
 	}
 }

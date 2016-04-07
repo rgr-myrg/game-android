@@ -7,7 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 
 import net.usrlib.android.gobirdie.R;
-import net.usrlib.android.gobirdie.game.Stage;
+import net.usrlib.android.gobirdie.game.World;
 import net.usrlib.android.gobirdie.object.GameObject;
 
 import java.util.ArrayList;
@@ -52,13 +52,13 @@ public class Bird extends GameObject {
 	}
 
 	public void reset() {
-		xRightBoundary = Stage.getWidth() - mBitMap.right.getWidth() - xOffset;
-		floorBoundary  = Stage.getHeight() - mBitMap.down.getHeight();
-		halfScreenBoundary = Stage.getHeight() / 2;
+		xRightBoundary = World.getWidth() - mBitMap.right.getWidth() - xOffset;
+		floorBoundary  = World.getHeight() - mBitMap.down.getHeight();
+		halfScreenBoundary = World.getHeight() / 2;
 
 		set(
-				Stage.getWidth() / 2 - mBitMap.right.getWidth() / 2,
-				Stage.getHeight() - mBitMap.right.getHeight() * 4,
+				World.getWidth() / 2 - mBitMap.right.getWidth() / 2,
+				World.getHeight() - mBitMap.right.getHeight() * 4,
 				mBitMap.right.getWidth(),
 				mBitMap.right.getHeight()
 		);
@@ -146,7 +146,7 @@ public class Bird extends GameObject {
 
 			mirrorMatrix.postTranslate( x, y );
 
-			canvas.drawBitmap( mBitMap.down, mirrorMatrix, Stage.sPaint);
+			canvas.drawBitmap( mBitMap.down, mirrorMatrix, World.sPaint);
 		} else {
 			if ( directionLeft ) {
 				canvas.drawBitmap( mBitMap.left, x , y, null );
@@ -228,7 +228,7 @@ public class Bird extends GameObject {
 				)
 		);
 
-		// Grab a bitmap for placing on stage.
+		// Grab a bitmap for placing on World.
 		// Go up incrementally depending on achievement to swap into a new actor.
 		mBitMap = mBitMaps.get( 0 );
 	}

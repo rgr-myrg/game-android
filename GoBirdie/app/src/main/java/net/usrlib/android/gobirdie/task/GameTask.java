@@ -31,7 +31,7 @@ public class GameTask implements Runnable {
 		} while (mIsRunning);
 	}
 
-	public boolean isRunning() {
+	public synchronized boolean isRunning() {
 		return mIsRunning;
 	}
 
@@ -39,7 +39,7 @@ public class GameTask implements Runnable {
 		mIsRunning = true;
 	}
 
-	public void stopTask() {
+	public synchronized void stopTask() {
 		mIsRunning = false;
 		Thread.currentThread().interrupt();
 	}

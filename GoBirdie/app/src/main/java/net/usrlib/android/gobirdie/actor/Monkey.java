@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import net.usrlib.android.gobirdie.R;
-import net.usrlib.android.gobirdie.game.Stage;
+import net.usrlib.android.gobirdie.game.World;
 import net.usrlib.android.gobirdie.object.GameObject;
 import net.usrlib.android.gobirdie.util.NumUtil;
 
@@ -49,7 +49,7 @@ public class Monkey extends GameObject {
 	}
 
 	public void reset() {
-		xRightBoundary = Stage.getWidth() - mAnimationFrames.getTopFrame().getWidth();
+		xRightBoundary = World.getWidth() - mAnimationFrames.getTopFrame().getWidth();
 		isOffStage     = false;
 		iterationCount = 0;
 		maxIterations  = NumUtil.getRandIntFromList(evenNums);
@@ -59,7 +59,7 @@ public class Monkey extends GameObject {
 		final Bitmap topFrame = mAnimationFrames.getTopFrame();
 
 		set(
-				Stage.getWidth() + topFrame.getWidth(),
+				World.getWidth() + topFrame.getWidth(),
 				0,
 				topFrame.getWidth(),
 				topFrame.getHeight()
@@ -83,7 +83,7 @@ public class Monkey extends GameObject {
 	
 			x = x + xOffset;
 
-			if ( x > Stage.getWidth() + mAnimationFrames.getTopFrame().getWidth() ) {
+			if ( x > World.getWidth() + mAnimationFrames.getTopFrame().getWidth() ) {
 				isOffStage = true;
 			}
 		} else {

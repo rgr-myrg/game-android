@@ -9,8 +9,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import net.usrlib.android.gobirdie.asset.Sound;
-
 public class Surface extends SurfaceView {
 	private boolean mHasSurfaceCreated;
 	private boolean mIsGameOver;
@@ -45,14 +43,14 @@ public class Surface extends SurfaceView {
 			return;
 		}
 
-		Stage.initWithSurfaceView(this);
-		Actor.resetActors();
+		World.initWithSurfaceView(this);
+		World.resetActors();
 
 		Canvas canvas = getHolder().lockCanvas();
 		canvas.drawColor( 0, PorterDuff.Mode.CLEAR );
 
-		Actor.sBird.draw(canvas);
-		Actor.sFruit.draw(canvas);
+		World.sBird.draw(canvas);
+		World.sFruit.draw(canvas);
 
 		getHolder().unlockCanvasAndPost(canvas);
 
@@ -62,7 +60,7 @@ public class Surface extends SurfaceView {
 
 	public void onSurfaceDestroyed() {
 		Log.i("SURFACE", "onSurfaceDestroyed!!!");
-		Stage.stopGameLoop();
+		World.stopGameLoop();
 	}
 
 	public boolean onTouchEvent( MotionEvent event ) {
@@ -76,22 +74,22 @@ public class Surface extends SurfaceView {
 			return true;
 		}
 
-		Stage.startGameLoop();
-		Actor.sBird.onTap();
+		World.startGameLoop();
+		World.sBird.onTap();
 
 		return true;
 	}
 
 	public void onCanvasDraw(final Canvas canvas) {
 		canvas.drawColor(0, PorterDuff.Mode.CLEAR);
-		Actor.drawActors(canvas);
+		World.drawActors(canvas);
 	}
 
 	public void onCanvasDrawWithDelta(final Canvas canvas, float delta) {
 		Log.d("SURFACE", "delta: " + String.valueOf(delta));
 
 		canvas.drawColor(0, PorterDuff.Mode.CLEAR);
-		Actor.drawActors(canvas);
+		World.drawActors(canvas);
 	}
 
 	public void onUpdate() {
@@ -108,58 +106,58 @@ public class Surface extends SurfaceView {
 	}
 
 	private void updateActors() {
-		Actor.sBird.update();
-		Actor.sEagle.update();
-		Actor.sSnake.update();
-		Actor.sMonkey.update();
+		World.sBird.update();
+		World.sEagle.update();
+		World.sSnake.update();
+		World.sMonkey.update();
 
 		if (mIsGameOver) {
 			return;
 		}
 
-		if (Actor.sBird.intersectsWith(Actor.sFruit) && !Actor.sBird.hasFruit()) {
-			Stage.updateScore();
+		if (World.sBird.intersectsWith(World.sFruit) && !World.sBird.hasFruit()) {
+			World.updateScore();
 
-			Sound.playTone1();
-			Actor.sBird.setHasFruit(true);
+			World.playTone1();
+			World.sBird.setHasFruit(true);
 		}
 
-		if (Actor.sBird.hasFruit()) {
-			Actor.sFruit.updateWith(Actor.sBird.x, Actor.sBird.y + Actor.sBird.height);
+		if (World.sBird.hasFruit()) {
+			World.sFruit.updateWith(World.sBird.x, World.sBird.y + World.sBird.height);
 		}
 
-		if (Actor.sBird.intersectsWith(Actor.sBirdhouse) && Actor.sBird.hasFruit()) {
-			Stage.updateScore();
+		if (World.sBird.intersectsWith(World.sBirdhouse) && World.sBird.hasFruit()) {
+			World.updateScore();
 
-			Sound.playTone2();
+			World.playTone2();
 			//birdhouse.disable();
-			Actor.sBird.setHasFruit(false);
-			Actor.sFruit.reset();
+			World.sBird.setHasFruit(false);
+			World.sFruit.reset();
 		}
 
-		if ( Actor.sBird.intersectsWith(Actor.sMonkey)) {
+		if ( World.sBird.intersectsWith(World.sMonkey)) {
 
-			Sound.playSlap();
-			Actor.sBird.onBump();
+			World.playSlap();
+			World.sBird.onBump();
 		}
 
-		if ( Actor.sBird.intersectsWith(Actor.sSnake)) {
+		if ( World.sBird.intersectsWith(World.sSnake)) {
 
-			Sound.playChirp();
-			Actor.sBird.onTap();
+			World.playChirp();
+			World.sBird.onTap();
 		}
 
-		if ( Actor.sBird.intersectsWith(Actor.sEagle)) {
-			Actor.sBird.onHit();
+		if ( World.sBird.intersectsWith(World.sEagle)) {
+			World.sBird.onHit();
 
-			Sound.playAlarm();
+			World.playAlarm();
 			//birdhouse.disable();
 		}
 
-		if (Actor.sBird.hasCrashed()) {
+		if (World.sBird.hasCrashed()) {
 
 			mIsGameOver = true;
-			Sound.playPunch();
+			World.playPunch();
 			//Facade.displayScoreTable();
 		}
 	}

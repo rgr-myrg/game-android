@@ -1,5 +1,6 @@
 package net.usrlib.android.gobirdie;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +9,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
-import net.usrlib.android.gobirdie.asset.Font;
-import net.usrlib.android.gobirdie.asset.Image;
-import net.usrlib.android.gobirdie.asset.Music;
-import net.usrlib.android.gobirdie.asset.Sound;
 import net.usrlib.android.gobirdie.event.GameEvent;
-import net.usrlib.android.gobirdie.game.Actor;
+import net.usrlib.android.gobirdie.game.World;
 import net.usrlib.android.gobirdie.settings.Settings;
 import net.usrlib.pattern.TinyEvent;
 
@@ -59,31 +56,33 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void loadAssets() {
-		Image.loadImages(getApplicationContext());
-		Font.loadFonts(getApplicationContext());
-		Sound.loadSounds(getApplicationContext());
-		Music.loadMusic(getApplicationContext());
-		Actor.loadActors(getApplicationContext());
+		final Context context = getApplicationContext();
+
+		World.loadFonts(context);
+		World.loadImages(context);
+		World.loadSounds(context);
+		World.loadMusic(context);
+		World.loadActors(context);
 	}
 
 	// Invoked when GameEvent.FontLoaded.notifySuccess is triggered
 	private void setButtonsTypeface() {
-		((Button) findViewById(R.id.btnPlay)).setTypeface(Font.sTypewriter);
-		((Button) findViewById(R.id.btnAbout)).setTypeface(Font.sTypewriter);
+		((Button) findViewById(R.id.btnPlay)).setTypeface(World.sTypewriter);
+		((Button) findViewById(R.id.btnAbout)).setTypeface(World.sTypewriter);
 
-		mMusicButton.setTypeface(Font.sTypewriter);
-		mSoundButton.setTypeface(Font.sTypewriter);
+		mMusicButton.setTypeface(World.sTypewriter);
+		mSoundButton.setTypeface(World.sTypewriter);
 	}
 
 	public void startGameActivity(View view) {
 		Log.d("MAIN", "startGameActivity");
-		Sound.playTone1();
+		World.playTone1();
 		startActivity(new Intent(this, GameActivity.class));
 	}
 
 	public void startAboutActivity(View view) {
 		Log.d("MAIN", "startOptionsActivity");
-		Sound.playChirp();
+		World.playChirp();
 	}
 
 	public void toggleMusicSettings(final View view) {
@@ -104,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
 
 	private void toggleMusicBtnText(final boolean flag) {
 		if (flag) {
-			Music.resumeMediaPlayer();
+			World.resumeMediaPlayer();
 		} else {
-			Music.pauseMediaPlayer();
+			World.pauseMediaPlayer();
 		}
 
 		mMusicButton.setText(
