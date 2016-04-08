@@ -296,8 +296,8 @@ public class World {
 
 	private static Activity sActivity;
 	private static View sGameLayout;
-	private static TextView sScoreView;
 	private static GameTask sGameTask;
+	private static TextView sScoreView;
 
 	private static int sScore = 0;
 	private static int sWidth;
@@ -321,8 +321,11 @@ public class World {
 		sPaint.setFilterBitmap(true);
 
 		sGameTask = new GameTask(view);
-
 		Log.i("STAGE", "initWithSurfaceView " + String.valueOf(getWidth()) + "x" + String.valueOf(getHeight()));
+	}
+
+	public static Activity getActivity() {
+		return sActivity;
 	}
 
 	public static final int getWidth() {
@@ -349,6 +352,10 @@ public class World {
 					}
 				}
 		);
+	}
+
+	public static boolean isGameLoopRunning() {
+		return sGameTask.isRunning();
 	}
 
 	public static final void startGameLoop() {

@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import net.usrlib.android.gobirdie.task.UpdateTask;
+
 public class Surface extends SurfaceView {
 	private boolean mHasSurfaceCreated;
 	private boolean mIsGameOver;
@@ -74,7 +76,10 @@ public class Surface extends SurfaceView {
 			return true;
 		}
 
-		World.startGameLoop();
+		if (!World.isGameLoopRunning()) {
+			World.startGameLoop();
+		}
+
 		World.sBird.onTap();
 
 		return true;
@@ -85,27 +90,13 @@ public class Surface extends SurfaceView {
 		World.drawActors(canvas);
 	}
 
-	public void onCanvasDrawWithDelta(final Canvas canvas, float delta) {
-		Log.d("SURFACE", "delta: " + String.valueOf(delta));
-
-		canvas.drawColor(0, PorterDuff.Mode.CLEAR);
-		World.drawActors(canvas);
-	}
+//	public void onUpdateWithDelta(int delta) {
+//		Log.d("Surface", "delta: " + String.valueOf(delta));
+//		World.sEagle.updateWithDelta(delta);
+//		onUpdate();
+//	}
 
 	public void onUpdate() {
-//		new Thread(
-//				new Runnable() {
-//					@Override
-//					public void run() {
-//						updateActors();
-//					}
-//				}
-//		).start();
-
-		updateActors();
-	}
-
-	private void updateActors() {
 		World.sBird.update();
 		World.sEagle.update();
 		World.sSnake.update();

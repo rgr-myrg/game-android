@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.util.Log;
 
 import net.usrlib.android.gobirdie.R;
 import net.usrlib.android.gobirdie.game.World;
@@ -22,6 +23,8 @@ public class Bird extends GameObject {
 	private static final int ROTATE_DEGREES = 45;
 
 	private int xOffset = VELOCITY_X;
+	private int velocityX = VELOCITY_X;
+	private int velocityY = VELOCITY_Y;
 
 	private boolean flying;
 	private boolean directionLeft;
@@ -94,11 +97,11 @@ public class Bird extends GameObject {
 		}
 
 		if ( x > xRightBoundary ) {
-			xOffset = (-VELOCITY_X);
+			xOffset = (-velocityX);
 			flying = false;
 			directionLeft = true;
 		} else if ( x + xOffset < 0 ) {
-			xOffset = VELOCITY_X;
+			xOffset = velocityX;
 			flying = false;
 			directionLeft = false;
 		}
@@ -113,7 +116,7 @@ public class Bird extends GameObject {
 		}
 
 		if ( !flying ) {
-			y = (int) (y + VELOCITY_Y);
+			y = (int) (y + velocityY);
 		} else {
 			if ( directionLeft ) {
 				x = x - (int)( JUMP_DISTANCE * Math.sin(angle) );
@@ -135,7 +138,7 @@ public class Bird extends GameObject {
 
 		updatePosition( x, y );
 	}
-	 
+
 	public void draw(Canvas canvas) {
 		if ( isFalling ) {
 			if ( directionLeft ) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import net.usrlib.android.gobirdie.R;
 import net.usrlib.android.gobirdie.game.World;
@@ -11,7 +12,9 @@ import net.usrlib.android.gobirdie.object.GameObject;
 import net.usrlib.android.gobirdie.util.NumUtil;
 
 public class Eagle extends GameObject {
-	private final int DEFAULT_VELOCITY = 3;
+	private static final int DEFAULT_VELOCITY = 7;
+	private static final int MAX_VELOCITY = 30;
+
 	private final int sAnimationFrameRate = 15;
 	private int xRightBoundary;
 	private int yTopBoundary;
@@ -76,6 +79,24 @@ public class Eagle extends GameObject {
 		x = x + offsetX;
 
 		updatePosition( x, y );
+		// Reset velocity
+		// velocity = DEFAULT_VELOCITY;
+	}
+
+	public void updateWithDelta(int delta) {
+		velocity = delta > DEFAULT_VELOCITY ? delta - DEFAULT_VELOCITY : DEFAULT_VELOCITY - delta;
+
+		if (velocity > MAX_VELOCITY) {
+			velocity = MAX_VELOCITY;
+		}
+
+		Log.d("Eagle", "start velocity: " + String.valueOf(velocity));
+
+		//velocity = velocity + delta;
+		//update();
+//		velocity = delta < mLastDelta ? DEFAULT_VELOCITY : delta;
+//		Log.d("Eagle", "end velocity: " + String.valueOf(velocity));
+//		mLastDelta = delta;
 	}
 
 	public void draw ( Canvas canvas ) {

@@ -12,7 +12,7 @@ import net.usrlib.android.gobirdie.object.GameObject;
 import net.usrlib.android.gobirdie.util.NumUtil;
 
 public class Snake extends GameObject {
-	private static final int DEFAULT_VELOCITY = 2;
+	private static final int DEFAULT_VELOCITY = 3;
 	private static final int TIME_OFFSET = 100;
 
 	private final int sAnimationFrameRate = 10;
