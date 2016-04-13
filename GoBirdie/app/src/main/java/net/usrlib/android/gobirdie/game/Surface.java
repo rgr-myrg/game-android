@@ -9,8 +9,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import net.usrlib.android.gobirdie.task.UpdateTask;
-
 public class Surface extends SurfaceView {
 	private boolean mHasSurfaceCreated;
 	private boolean mIsGameOver;
@@ -96,6 +94,9 @@ public class Surface extends SurfaceView {
 //		onUpdate();
 //	}
 
+//	public void onUpdate() {
+//		World.sBird.update();
+//	}
 	public void onUpdate() {
 		World.sBird.update();
 		World.sEagle.update();
