@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 
 public class GameObject {
+	public PositionCoordinates position = new PositionCoordinates();
 	public int x;
 	public int y;
 	public int width;
@@ -30,6 +31,15 @@ public class GameObject {
 		this.height = height;
 
 		updatePadding();
+	}
+
+	public void moveTo(int x, int y, int minX, int maxX, int minY, int maxY)  {
+		this.x = x;
+		this.y = y;
+		this.minX = minX;
+		this.maxX = maxX;
+		this.minY = minY;
+		this.maxY = maxY;
 	}
 
 	public void setPadding( float pad ) {
@@ -64,6 +74,8 @@ public class GameObject {
 			maxX = x + width;
 			maxY = y + height;
 		}
+
+		position.setPositionCoordinates(x, y, minX, maxX, minY, maxY);
 	}
 
 	public void setAnimationFrameRate(final int frameRate) {
@@ -74,6 +86,18 @@ public class GameObject {
 		mAnimationFrames.add(BitmapFactory.decodeResource(resources, drawableId));
 	}
 
+	public static class PositionCoordinates {
+		public int x, y, minX, maxX, minY, maxY;
+
+		public final void setPositionCoordinates(int x, int y, int minX, int maxX, int minY, int maxY) {
+			this.x = x;
+			this.y = y;
+			this.minX = minX;
+			this.maxX = maxX;
+			this.minY = minY;
+			this.maxY = maxY;
+		}
+	}
 }
 
 // Example
