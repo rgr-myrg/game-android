@@ -1,4 +1,4 @@
-package net.usrlib.android.gobirdie.object;
+package net.usrlib.gobirdie.game;
 
 import android.graphics.Bitmap;
 

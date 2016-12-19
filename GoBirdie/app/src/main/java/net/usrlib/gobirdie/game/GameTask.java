@@ -1,8 +1,6 @@
-package net.usrlib.android.gobirdie.task;
+package net.usrlib.gobirdie.game;
 
 import android.graphics.Canvas;
-
-import net.usrlib.android.gobirdie.game.Surface;
 
 public class GameTask implements Runnable {
 	// 1 millisecond = 1000000 nanoseconds
@@ -28,6 +26,7 @@ public class GameTask implements Runnable {
 
 				mSurfaceView.getHolder().unlockCanvasAndPost(canvas);
 			}
+
 		} while (mIsRunning);
 	}
 	public synchronized boolean isRunning() {

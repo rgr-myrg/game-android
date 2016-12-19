@@ -1,4 +1,4 @@
-package net.usrlib.android.gobirdie.actor;
+package net.usrlib.gobirdie.actor;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,13 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 
-import net.usrlib.android.gobirdie.R;
-import net.usrlib.android.gobirdie.game.World;
-import net.usrlib.android.gobirdie.object.GameObject;
-import net.usrlib.android.gobirdie.util.NumUtil;
+import net.usrlib.gobirdie.R;
+import net.usrlib.gobirdie.game.GameObject;
+import net.usrlib.gobirdie.game.World;
+import net.usrlib.gobirdie.util.NumUtil;
 
 public class Snake extends GameObject {
-	private static final int DEFAULT_VELOCITY = 3;
+	private static final float DEFAULT_VELOCITY = .3f;
 	private static final int TIME_OFFSET = 100;
 
 	private final int sAnimationFrameRate = 10;
@@ -20,8 +20,8 @@ public class Snake extends GameObject {
 	private int xRightBoundary;
 	private int xLeftBoundary;
 
-	private int velocity = DEFAULT_VELOCITY;
-	private int xOffset = velocity;
+	private float velocity = DEFAULT_VELOCITY;
+	private float xOffset = velocity;
 	private int maxElapsed;
 
 	private boolean isTurningLeft;

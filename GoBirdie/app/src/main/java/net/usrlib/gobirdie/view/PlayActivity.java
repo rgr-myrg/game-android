@@ -1,20 +1,25 @@
-package net.usrlib.android.gobirdie;
+package net.usrlib.gobirdie.view;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
-import net.usrlib.android.gobirdie.game.Surface;
-import net.usrlib.android.gobirdie.game.World;
+import net.usrlib.gobirdie.R;
+import net.usrlib.gobirdie.game.Surface;
+import net.usrlib.gobirdie.game.World;
 
-public class GameActivity extends Activity {
+/**
+ * Created by rgr-myrg on 12/18/16.
+ */
+
+public class PlayActivity extends Activity {
 	private RelativeLayout.LayoutParams mLayoutParams;
 	private Surface mSurface;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_game);
+		setContentView(R.layout.game_activity);
 
 		World.loadContentView(this);
 

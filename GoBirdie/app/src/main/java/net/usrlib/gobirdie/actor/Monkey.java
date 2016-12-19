@@ -1,22 +1,22 @@
-package net.usrlib.android.gobirdie.actor;
+package net.usrlib.gobirdie.actor;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import net.usrlib.android.gobirdie.R;
-import net.usrlib.android.gobirdie.game.World;
-import net.usrlib.android.gobirdie.object.GameObject;
-import net.usrlib.android.gobirdie.util.NumUtil;
+import net.usrlib.gobirdie.R;
+import net.usrlib.gobirdie.game.GameObject;
+import net.usrlib.gobirdie.game.World;
+import net.usrlib.gobirdie.util.NumUtil;
 
 public class Monkey extends GameObject {
-	private static final int DEFAULT_VELOCITY = 5;
+	private static final float DEFAULT_VELOCITY = .5f;
 	private static final int TIME_OFFSET = 100;
 	private final int sAnimationFrameRate = 10;
 
-	private int velocity = 5;
-	private int xOffset = DEFAULT_VELOCITY;
+	private float velocity = .5f;
+	private float xOffset = DEFAULT_VELOCITY;
 
 	private int[] evenNums = new int[4];
 

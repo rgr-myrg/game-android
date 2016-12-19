@@ -1,30 +1,30 @@
-package net.usrlib.android.gobirdie.object;
+package net.usrlib.gobirdie.game;
 
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 
 public class GameObject {
 	public PositionCoordinates position = new PositionCoordinates();
-	public int x;
-	public int y;
-	public int width;
-	public int height;
+	public float x;
+	public float y;
+	public float width;
+	public float height;
 
-	public int minX;
-	public int minY;
-	public int maxX;
-	public int maxY;
+	public float minX;
+	public float minY;
+	public float maxX;
+	public float maxY;
 
 	protected float padding = 0;
 	protected AnimationFrames mAnimationFrames = new AnimationFrames();
 
 	public GameObject() {}
 
-	public GameObject(int x, int y, int width, int height) {
+	public GameObject(float x, float y, float width, float height) {
 		set(x, y, width, height);
 	}
 
-	public void set( int x, int y, int width, int height ) {
+	public void set( float x, float y, float width, float height ) {
 		this.x = x;
 		this.y = y;
 		this.width  = width;
@@ -33,7 +33,7 @@ public class GameObject {
 		updatePadding();
 	}
 
-	public void moveTo(int x, int y, int minX, int maxX, int minY, int maxY)  {
+	public void moveTo(float x, float y, float minX, float maxX, float minY, float maxY)  {
 		this.x = x;
 		this.y = y;
 		this.minX = minX;
@@ -42,11 +42,21 @@ public class GameObject {
 		this.maxY = maxY;
 	}
 
+	public void moveWithPositionCoordinates(PositionCoordinates coordinates) {
+		moveTo(
+				coordinates.x,
+				coordinates.y,
+				coordinates.minX,
+				coordinates.maxX,
+				coordinates.minY,
+				coordinates.maxY
+		);
+	}
 	public void setPadding( float pad ) {
 		padding = pad;
 	}
 
-	public void updatePosition( int x, int y ) {
+	public void updatePosition( float x, float y ) {
 		this.x = x;
 		this.y = y;
 
@@ -87,9 +97,9 @@ public class GameObject {
 	}
 
 	public static class PositionCoordinates {
-		public int x, y, minX, maxX, minY, maxY;
+		public float x, y, minX, maxX, minY, maxY;
 
-		public final void setPositionCoordinates(int x, int y, int minX, int maxX, int minY, int maxY) {
+		public final void setPositionCoordinates(float x, float y, float minX, float maxX, float minY, float maxY) {
 			this.x = x;
 			this.y = y;
 			this.minX = minX;

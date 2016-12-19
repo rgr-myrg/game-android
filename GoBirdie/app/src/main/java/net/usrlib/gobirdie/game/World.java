@@ -1,4 +1,4 @@
-package net.usrlib.android.gobirdie.game;
+package net.usrlib.gobirdie.game;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,33 +13,32 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import net.usrlib.android.gobirdie.R;
-import net.usrlib.android.gobirdie.actor.Bird;
-import net.usrlib.android.gobirdie.actor.Birdhouse;
-import net.usrlib.android.gobirdie.actor.Eagle;
-import net.usrlib.android.gobirdie.actor.Fruit;
-import net.usrlib.android.gobirdie.actor.Monkey;
-import net.usrlib.android.gobirdie.actor.Snake;
-import net.usrlib.android.gobirdie.event.GameEvent;
-import net.usrlib.android.gobirdie.settings.Settings;
-import net.usrlib.android.gobirdie.task.GameTask;
-import net.usrlib.android.gobirdie.task.MediaPlayerTask;
+import net.usrlib.gobirdie.R;
+import net.usrlib.gobirdie.actor.Bird;
+import net.usrlib.gobirdie.actor.Birdhouse;
+import net.usrlib.gobirdie.actor.Eagle;
+import net.usrlib.gobirdie.actor.Fruit;
+import net.usrlib.gobirdie.actor.Monkey;
+import net.usrlib.gobirdie.actor.Snake;
+import net.usrlib.gobirdie.util.MediaPlayerTask;
+import net.usrlib.gobirdie.util.Preferences;
 
 import java.io.IOException;
 
 public class World {
 	public static final String FONT_TYPEWRITER = "font/typewriter.ttf";
-	public static final String SOUND_TRACK  = "sound/silvadito_96kbps.mp3";
-	public static final String SOUND_ALARM  = "sound/alarm.mp3";
+	public static final String SOUND_TRACK = "sound/silvadito_96kbps.mp3";
+	public static final String SOUND_ALARM = "sound/alarm.mp3";
 	public static final String SOUND_TONE_1 = "sound/tone1.mp3";
 	public static final String SOUND_TONE_2 = "sound/tone2.mp3";
-	public static final String SOUND_PUNCH  = "sound/punch.mp3";
-	public static final String SOUND_CHIRP  = "sound/chirp.mp3";
-	public static final String SOUND_SLAP   = "sound/slap.mp3";
+	public static final String SOUND_PUNCH = "sound/punch.mp3";
+	public static final String SOUND_CHIRP = "sound/chirp.mp3";
+	public static final String SOUND_SLAP = "sound/slap.mp3";
 
 	//* ========== Game Objects ========== *//
 
@@ -62,17 +61,17 @@ public class World {
 	public static final void resetActors() {
 		sBird.reset();
 		sBirdhouse.reset();
-		sEagle.reset();
 		sFruit.reset();
 		sMonkey.reset();
+		sEagle.reset();
 		sSnake.reset();
 	}
 
 	public static final void drawActors(final Canvas canvas) {
 		sBird.draw(canvas);
-		sEagle.draw(canvas);
 		sFruit.draw(canvas);
 		sMonkey.draw(canvas);
+		sEagle.draw(canvas);
 		sSnake.draw(canvas);
 	}
 
@@ -80,10 +79,14 @@ public class World {
 
 	public static Typeface sTypewriter = null;
 
-	public static final void loadFonts(Context context) {
+	public interface OnFontLoaded {
+		void run(boolean success);
+	}
+
+	public static final void loadFonts(final Context context, final OnFontLoaded callback) {
 		if (sTypewriter == null) {
 			sTypewriter = Typeface.createFromAsset(context.getAssets(), FONT_TYPEWRITER);
-			GameEvent.FontLoaded.notifySuccess();
+			callback.run(true);
 		}
 	}
 
@@ -102,10 +105,17 @@ public class World {
 		final Resources resources = context.getResources();
 
 		// Use getResources() to support API 10. context.getDrawable requires API 21!
-		sCherry = resources.getDrawable(R.drawable.fruit_cherry);
-		sGrapes = resources.getDrawable(R.drawable.fruit_grapes);
-		sOrange = resources.getDrawable(R.drawable.fruit_orange);
-		sPear = resources.getDrawable(R.drawable.fruit_pear);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			sCherry = context.getDrawable(R.drawable.fruit_cherry);
+			sGrapes = context.getDrawable(R.drawable.fruit_grapes);
+			sOrange = context.getDrawable(R.drawable.fruit_orange);
+			sPear = context.getDrawable(R.drawable.fruit_pear);
+		} else {
+			sCherry = resources.getDrawable(R.drawable.fruit_cherry);
+			sGrapes = resources.getDrawable(R.drawable.fruit_grapes);
+			sOrange = resources.getDrawable(R.drawable.fruit_orange);
+			sPear = resources.getDrawable(R.drawable.fruit_pear);
+		}
 
 		sBirdRight = BitmapFactory.decodeResource(resources, R.drawable.bird_right);
 		sBirdLeft = BitmapFactory.decodeResource(resources, R.drawable.bird_left);
@@ -124,8 +134,8 @@ public class World {
 			sFileTrack = assetManager.openFd(SOUND_TRACK);
 			sMediaPlayerTask = new MediaPlayerTask(sFileTrack);
 
-			if (Settings.isMusicEnabled()) {
-				startMediaPlayer();
+			if (Preferences.isMusicEnabled(context)) {
+				startMediaPlayer(context);
 			}
 
 		} catch (IOException e) {
@@ -133,26 +143,26 @@ public class World {
 		}
 	}
 
-	public static final void startMediaPlayer() {
+	public static final void startMediaPlayer(Context context) {
 		if (sMediaPlayerTask == null) {
 			return;
 		}
 
-		if ( !sMediaPlayerTask.isRunning() && Settings.isMusicEnabled() ) {
-			new Thread( sMediaPlayerTask ).start();
+		if (!sMediaPlayerTask.isRunning() && Preferences.isMusicEnabled(context)) {
+			new Thread(sMediaPlayerTask).start();
 		}
 	}
 
-	public static final void resumeMediaPlayer() {
+	public static final void resumeMediaPlayer(Context context) {
 		if (sMediaPlayerTask == null) {
 			return;
 		}
 
-		if ( !sMediaPlayerTask.isRunning()  && Settings.isMusicEnabled() ) {
-			startMediaPlayer();
+		if (!sMediaPlayerTask.isRunning() && Preferences.isMusicEnabled(context)) {
+			startMediaPlayer(context);
 		}
 
-		if ( Settings.isMusicEnabled()) {
+		if (Preferences.isMusicEnabled(context)) {
 			sMediaPlayerTask.start();
 		}
 	}
@@ -199,16 +209,16 @@ public class World {
 			sFileTone2 = assetManager.openFd(SOUND_TONE_2);
 			sFilePunch = assetManager.openFd(SOUND_PUNCH);
 			sFileChirp = assetManager.openFd(SOUND_CHIRP);
-			sFileSlap  = assetManager.openFd(SOUND_SLAP);
+			sFileSlap = assetManager.openFd(SOUND_SLAP);
 
 			// Use SoundPool to support API's < 23 as required by SoundPool.Builder
 			sSoundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
 
 			sSoundPool.setOnLoadCompleteListener(
 					new SoundPool.OnLoadCompleteListener() {
-						public void onLoadComplete( SoundPool soundPool, int sampleId, int status ) {
+						public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
 							sIsReady = true;
-							GameEvent.SoundLoaded.notifySuccess();
+							//GameEvent.SoundLoaded.notifySuccess();
 						}
 					}
 			);
@@ -218,49 +228,49 @@ public class World {
 			sTone2Id = sSoundPool.load(sFileTone2, 1);
 			sPunchId = sSoundPool.load(sFilePunch, 1);
 			sChirpId = sSoundPool.load(sFileChirp, 1);
-			sSlapId  = sSoundPool.load(sFileSlap, 1);
+			sSlapId = sSoundPool.load(sFileSlap, 1);
 
 		} catch (IOException e) {
 
 			sIsReady = false;
-			GameEvent.SoundLoaded.notifyError(e.getMessage());
+			//GameEvent.SoundLoaded.notifyError(e.getMessage());
 			e.printStackTrace();
 
 		}
 	}
 
-	public static final void playAlarm() {
+	public static final void playAlarm(Context context) {
 		sSoundCount++;
 
 		// Avoid jittery playback
-		if ( sSoundCount >= MAX_PLAY_COUNT ) {
-			playSound(sAlarmId);
+		if (sSoundCount >= MAX_PLAY_COUNT) {
+			playSound(context, sAlarmId);
 			sSoundCount = 0;
 		}
 	}
 
-	public static final void playTone1() {
-		playSound(sTone1Id);
+	public static final void playTone1(Context context) {
+		playSound(context, sTone1Id);
 	}
 
-	public static final void playTone2() {
-		playSound(sTone2Id);
+	public static final void playTone2(Context context) {
+		playSound(context, sTone2Id);
 	}
 
-	public static final void playPunch() {
-		playSound(sPunchId);
+	public static final void playPunch(Context context) {
+		playSound(context, sPunchId);
 	}
 
-	public static final void playChirp() {
-		playSound(sChirpId);
+	public static final void playChirp(Context context) {
+		playSound(context, sChirpId);
 	}
 
-	public static final void playSlap() {
+	public static final void playSlap(Context context) {
 		sSoundCount++;
 
 		// Avoid jittery playback
-		if ( sSoundCount >= MAX_PLAY_COUNT ) {
-			playSound( sSlapId );
+		if (sSoundCount >= MAX_PLAY_COUNT) {
+			playSound(context, sSlapId);
 			sSoundCount = 0;
 		}
 	}
@@ -276,18 +286,14 @@ public class World {
 		sSoundCount = 0;
 	}
 
-	private static final void playSound( final int soundId ) {
-		if (sSoundPool == null || !sIsReady || !Settings.isSoundEnabled()) {
+	private static final void playSound(final Context context, final int soundId) {
+		if (sSoundPool == null || !sIsReady || !Preferences.isSoundEnabled(context)) {
 			return;
 		}
 
-		new Thread(
-				new Runnable(){
-					public void run() {
-						sSoundPool.play(soundId, 1.0f, 1.0f, 1, 0, 1.0f);
-					}
-				}
-		).start();
+		new Thread(() -> {
+			sSoundPool.play(soundId, 1.0f, 1.0f, 1, 0, 1.0f);
+		}).start();
 	}
 
 	//* ============= Stage ============== *//
@@ -306,7 +312,7 @@ public class World {
 	public static final void loadContentView(Activity activity) {
 		sGameLayout = (View) activity.findViewById(R.id.activity_game_layout);
 		sScoreView = (TextView) activity.findViewById(R.id.score_textview);
-		sScoreView.setText(String.valueOf(sScore));
+		sScoreView.setText(String.valueOf(0));
 		sScoreView.setTypeface(sTypewriter);
 
 		sActivity = activity;
@@ -321,6 +327,7 @@ public class World {
 		sPaint.setFilterBitmap(true);
 
 		sGameTask = new GameTask(view);
+
 		Log.i("STAGE", "initWithSurfaceView " + String.valueOf(getWidth()) + "x" + String.valueOf(getHeight()));
 	}
 
@@ -345,13 +352,9 @@ public class World {
 	}
 
 	public static final void setGameBackground(final int id) {
-		sActivity.runOnUiThread(
-				new Runnable() {
-					public void run() {
-						sGameLayout.setBackgroundResource(id);
-					}
-				}
-		);
+		sActivity.runOnUiThread(() -> {
+			sGameLayout.setBackgroundResource(id);
+		});
 	}
 
 	public static boolean isGameLoopRunning() {
@@ -364,6 +367,7 @@ public class World {
 		}
 
 		sGameTask.init();
+
 		new Thread(sGameTask).start();
 	}
 
@@ -373,13 +377,8 @@ public class World {
 
 	public static final void updateScore() {
 		sScore++;
-		sActivity.runOnUiThread(
-				new Runnable() {
-					@Override
-					public void run() {
-						sScoreView.setText(String.valueOf(sScore));
-					}
-				}
-		);
+		sActivity.runOnUiThread(() -> {
+			sScoreView.setText(String.valueOf(sScore));
+		});
 	}
 }

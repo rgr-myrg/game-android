@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	android:id="@+id/activity_game_layout"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/bg_game_1"
+	android:orientation="vertical"
+	android:gravity="end"
+	tools:context="net.usrlib.gobirdie.view.PlayActivity">
+		<TextView
+			android:id="@+id/score_textview"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/scoreboard"
+			android:layout_marginTop="@dimen/scoreboard_margin_top"
+			android:paddingLeft="@dimen/scoreboard_text_padding_left"
+			android:paddingRight="@dimen/scoreboard_text_padding_right"
+			android:text="0"
+			android:textColor="@color/colorBlack"
+			android:textSize="@dimen/button_text_size"/>
+</RelativeLayout>

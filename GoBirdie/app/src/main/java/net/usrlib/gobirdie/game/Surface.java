@@ -1,4 +1,4 @@
-package net.usrlib.android.gobirdie.game;
+package net.usrlib.gobirdie.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -47,7 +47,7 @@ public class Surface extends SurfaceView {
 		World.resetActors();
 
 		Canvas canvas = getHolder().lockCanvas();
-		canvas.drawColor( 0, PorterDuff.Mode.CLEAR );
+		canvas.drawColor(0, PorterDuff.Mode.CLEAR);
 
 		World.sBird.draw(canvas);
 		World.sFruit.draw(canvas);
@@ -84,6 +84,20 @@ public class Surface extends SurfaceView {
 	}
 
 	public void onCanvasDraw(final Canvas canvas) {
+//		if (!World.isEventqueueBufferReady()) {
+//			return;
+//		}
+//
+//
+//		final ArrayList<PositionCoordinates> positions = World.getNextEventQueueItem();
+//
+//		if (positions == null) {
+//			return;
+//		}
+//
+//		PositionCoordinates e = positions.get(1);
+//		World.sEagle.moveWithPositionCoordinates(e);
+
 		canvas.drawColor(0, PorterDuff.Mode.CLEAR);
 		World.drawActors(canvas);
 	}
@@ -94,15 +108,13 @@ public class Surface extends SurfaceView {
 //		onUpdate();
 //	}
 
-//	public void onUpdate() {
-//		World.sBird.update();
-//	}
 	public void onUpdate() {
 		World.sBird.update();
 		World.sEagle.update();
 		World.sSnake.update();
 		World.sMonkey.update();
 
+		// take from the queue
 		if (mIsGameOver) {
 			return;
 		}
@@ -110,46 +122,46 @@ public class Surface extends SurfaceView {
 		if (World.sBird.intersectsWith(World.sFruit) && !World.sBird.hasFruit()) {
 			World.updateScore();
 
-			World.playTone1();
+			World.playTone1(getContext());
 			World.sBird.setHasFruit(true);
 		}
 
 		if (World.sBird.hasFruit()) {
-			World.sFruit.updateWith(World.sBird.x, World.sBird.y + World.sBird.height);
+			World.sFruit.updateWith((int)World.sBird.x, (int)World.sBird.y + (int)World.sBird.height);
 		}
 
 		if (World.sBird.intersectsWith(World.sBirdhouse) && World.sBird.hasFruit()) {
 			World.updateScore();
 
-			World.playTone2();
+			World.playTone2(getContext());
 			//birdhouse.disable();
 			World.sBird.setHasFruit(false);
 			World.sFruit.reset();
 		}
 
-		if ( World.sBird.intersectsWith(World.sMonkey)) {
+		if (World.sBird.intersectsWith(World.sMonkey)) {
 
-			World.playSlap();
+			World.playSlap(getContext());
 			World.sBird.onBump();
 		}
 
-		if ( World.sBird.intersectsWith(World.sSnake)) {
+		if (World.sBird.intersectsWith(World.sSnake)) {
 
-			World.playChirp();
+			World.playChirp(getContext());
 			World.sBird.onTap();
 		}
 
-		if ( World.sBird.intersectsWith(World.sEagle)) {
+		if (World.sBird.intersectsWith(World.sEagle)) {
 			World.sBird.onHit();
 
-			World.playAlarm();
+			World.playAlarm(getContext());
 			//birdhouse.disable();
 		}
 
 		if (World.sBird.hasCrashed()) {
 
 			mIsGameOver = true;
-			World.playPunch();
+			World.playPunch(getContext());
 			//Facade.displayScoreTable();
 		}
 	}

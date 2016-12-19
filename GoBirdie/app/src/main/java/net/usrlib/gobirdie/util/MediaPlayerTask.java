@@ -1,4 +1,4 @@
-package net.usrlib.android.gobirdie.task;
+package net.usrlib.gobirdie.util;
 
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;

@@ -1,4 +1,4 @@
-package net.usrlib.android.gobirdie.actor;
+package net.usrlib.gobirdie.actor;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,21 +6,21 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
 
-import net.usrlib.android.gobirdie.R;
-import net.usrlib.android.gobirdie.game.World;
-import net.usrlib.android.gobirdie.object.GameObject;
-import net.usrlib.android.gobirdie.util.NumUtil;
+import net.usrlib.gobirdie.R;
+import net.usrlib.gobirdie.game.GameObject;
+import net.usrlib.gobirdie.game.World;
+import net.usrlib.gobirdie.util.NumUtil;
 
 public class Eagle extends GameObject {
-	private static final int DEFAULT_VELOCITY = 7;
-	private static final int MAX_VELOCITY = 30;
+	private static final float DEFAULT_VELOCITY = .10f;
+	private static final float MAX_VELOCITY = 30;
 
 	private final int sAnimationFrameRate = 15;
 	private int xRightBoundary;
 	private int yTopBoundary;
 
-	private int velocity = DEFAULT_VELOCITY;
-	private int offsetX, offsetY;
+	private float velocity = DEFAULT_VELOCITY;
+	private float offsetX, offsetY;
 
 	public Eagle(Context context) {
 		loadAnimationFrames(context.getResources());
@@ -54,7 +54,7 @@ public class Eagle extends GameObject {
 		);
 
 		if ( World.getWidth() > 520 ) {
-			velocity = 5;
+			//velocity = 5;
 		}
 
 		offsetX = velocity;
@@ -68,7 +68,7 @@ public class Eagle extends GameObject {
 			offsetY = velocity;
 		}
 	
-		y = (int) (y + offsetY);
+		y = y + offsetY;
 
 		if ( x > World.getWidth() ) {
 			offsetX = ( -velocity );

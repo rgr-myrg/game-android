@@ -1,4 +1,4 @@
-package net.usrlib.android.gobirdie.util;
+package net.usrlib.gobirdie.util;
 
 import java.util.Random;
 

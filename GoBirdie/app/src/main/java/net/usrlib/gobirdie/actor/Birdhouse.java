@@ -1,12 +1,12 @@
-package net.usrlib.android.gobirdie.actor;
+package net.usrlib.gobirdie.actor;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import net.usrlib.android.gobirdie.game.World;
-import net.usrlib.android.gobirdie.object.GameObject;
+import net.usrlib.gobirdie.game.GameObject;
+import net.usrlib.gobirdie.game.World;
 
 public class Birdhouse extends GameObject {
 //	private boolean active = true;
@@ -37,7 +37,7 @@ public class Birdhouse extends GameObject {
 
 	public void draw( Canvas canvas ) {
 //		Makes Collider Visible. Testing Only
-		Rect r = new Rect( minX, minY, maxX, maxY);
+		Rect r = new Rect( (int)minX, (int)minY, (int)maxX, (int)maxY);
 		World.sPaint.setStyle(Paint.Style.STROKE);
 		World.sPaint.setColor(Color.RED);
 		canvas.drawRect(r, World.sPaint);

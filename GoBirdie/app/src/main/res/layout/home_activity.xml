@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				xmlns:tools="http://schemas.android.com/tools"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:id="@+id/background"
-				android:background="@drawable/screen_welcome"
-				tools:context="${relativePackage}.${activityClass}" >
+<RelativeLayout
+	android:id="@+id/background"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/screen_welcome"
+	tools:context="net.usrlib.gobirdie.view.HomeActivity">
 
 	<LinearLayout
 		android:layout_width="wrap_content"
@@ -14,50 +14,50 @@
 		android:layout_centerHorizontal="true"
 		android:layout_centerVertical="false"
 		android:layout_marginTop="@dimen/main_layout_margin_top"
-		android:orientation="vertical" >
+		android:orientation="vertical">
 
 		<Button
 			android:id="@+id/btnPlay"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/btn_play"
 			android:background="@drawable/button"
+			android:onClick="startPlayActivity"
+			android:text="@string/btn_play"
 			android:textColor="@color/colorRed"
-			android:textSize="@dimen/button_text_size"
-			android:onClick="startGameActivity"/>
+			android:textSize="@dimen/button_text_size"/>
 
 		<Button
 			android:id="@+id/btnMusicSettings"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/btn_music"
+			android:layout_marginTop="@dimen/button_margin_top"
 			android:background="@drawable/button"
-			android:textColor="@color/colorRed"
-			android:textSize="@dimen/button_text_size"
 			android:onClick="toggleMusicSettings"
-			android:layout_marginTop="@dimen/button_margin_top"/>
+			android:text="@string/btn_music"
+			android:textColor="@color/colorRed"
+			android:textSize="@dimen/button_text_size"/>
 
 		<Button
 			android:id="@+id/btnSoundSettings"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/btn_sound"
+			android:layout_marginTop="@dimen/button_margin_top"
 			android:background="@drawable/button"
-			android:textColor="@color/colorRed"
-			android:textSize="@dimen/button_text_size"
 			android:onClick="toggleSoundSettings"
-			android:layout_marginTop="@dimen/button_margin_top"/>
+			android:text="@string/btn_sound"
+			android:textColor="@color/colorRed"
+			android:textSize="@dimen/button_text_size"/>
 
 		<Button
 			android:id="@+id/btnAbout"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/btn_about"
+			android:layout_marginTop="@dimen/button_margin_top"
 			android:background="@drawable/button"
-			android:textColor="@color/colorRed"
-			android:textSize="@dimen/button_text_size"
 			android:onClick="startAboutActivity"
-			android:layout_marginTop="@dimen/button_margin_top"/>
+			android:text="@string/btn_about"
+			android:textColor="@color/colorRed"
+			android:textSize="@dimen/button_text_size"/>
 
 	</LinearLayout>
 

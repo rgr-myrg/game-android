@@ -1,11 +1,11 @@
-package net.usrlib.android.gobirdie.actor;
+package net.usrlib.gobirdie.actor;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
-import net.usrlib.android.gobirdie.game.World;
-import net.usrlib.android.gobirdie.object.GameObject;
-import net.usrlib.android.gobirdie.util.NumUtil;
+import net.usrlib.gobirdie.game.GameObject;
+import net.usrlib.gobirdie.game.World;
+import net.usrlib.gobirdie.util.NumUtil;
 
 import java.util.ArrayList;
 import java.util.List;
