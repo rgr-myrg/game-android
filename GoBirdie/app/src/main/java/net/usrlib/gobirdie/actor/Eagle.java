@@ -12,7 +12,7 @@ import net.usrlib.gobirdie.game.World;
 import net.usrlib.gobirdie.util.NumUtil;
 
 public class Eagle extends GameObject {
-	private static final float DEFAULT_VELOCITY = .10f;
+	private static final float DEFAULT_VELOCITY = 3.0f;
 	private static final float MAX_VELOCITY = 30;
 
 	private final int sAnimationFrameRate = 15;

@@ -2,14 +2,18 @@ package net.usrlib.gobirdie.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.ads.AdView;
+
 import net.usrlib.gobirdie.R;
 import net.usrlib.gobirdie.game.World;
+import net.usrlib.gobirdie.util.AdRequestUtil;
 import net.usrlib.gobirdie.util.Preferences;
 
 /**
@@ -24,6 +28,8 @@ public class HomeActivity extends AppCompatActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_activity);
+
+		AdRequestUtil.makeAdRequest((AdView) findViewById(R.id.adView));
 
 		mMusicButton = (Button) findViewById(R.id.btnMusicSettings);
 		mSoundButton = (Button) findViewById(R.id.btnSoundSettings);
@@ -43,12 +49,10 @@ public class HomeActivity extends AppCompatActivity {
 		final Context context = getApplicationContext();
 
 		new Thread(() -> {
-			World.loadFonts(context, success -> {
-				if (success) {
-					runOnUiThread(() -> {
-						setButtonsTypeface();
-					});
-				}
+			World.loadFonts(context, typeface -> {
+				runOnUiThread(() -> {
+					setButtonsTypeface(typeface);
+				});
 			});
 
 			World.loadImages(context);
@@ -58,12 +62,12 @@ public class HomeActivity extends AppCompatActivity {
 		}).start();
 	}
 
-	private void setButtonsTypeface() {
-		((Button) findViewById(R.id.btnPlay)).setTypeface(World.sTypewriter);
-		((Button) findViewById(R.id.btnAbout)).setTypeface(World.sTypewriter);
+	private void setButtonsTypeface(final Typeface typeface) {
+		((Button) findViewById(R.id.btnPlay)).setTypeface(typeface);
+		((Button) findViewById(R.id.btnAbout)).setTypeface(typeface);
 
-		mMusicButton.setTypeface(World.sTypewriter);
-		mSoundButton.setTypeface(World.sTypewriter);
+		mMusicButton.setTypeface(typeface);
+		mSoundButton.setTypeface(typeface);
 	}
 
 	private void setMusicButtonText(final boolean isMusicEnabled) {
@@ -102,10 +106,6 @@ public class HomeActivity extends AppCompatActivity {
 
 	public void toggleSoundSettings(View view) {
 		final boolean isSoundEnabled = Preferences.isSoundEnabled(getApplicationContext());
-
-		if (!isSoundEnabled) {
-			World.playTone2(getApplicationContext());
-		}
 
 		Preferences.enableSound(getApplicationContext(), !isSoundEnabled);
 		setSoundButtonText(!isSoundEnabled);

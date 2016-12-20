@@ -13,5 +13,6 @@
 	<dimen name="scoreboard_padding_right">-7dp</dimen>
 	<dimen name="scoreboard_text_padding_right">10dp</dimen>
 	<dimen name="scoreboard_text_padding_left">5dp</dimen>
+	<dimen name="score_cardview_size">200dp</dimen>
 
 </resources>

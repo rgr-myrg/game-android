@@ -1,6 +1,5 @@
 package net.usrlib.gobirdie.game;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
@@ -15,8 +14,6 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import net.usrlib.gobirdie.R;
 import net.usrlib.gobirdie.actor.Bird;
@@ -80,14 +77,15 @@ public class World {
 	public static Typeface sTypewriter = null;
 
 	public interface OnFontLoaded {
-		void run(boolean success);
+		void run(Typeface typeface);
 	}
 
 	public static final void loadFonts(final Context context, final OnFontLoaded callback) {
 		if (sTypewriter == null) {
 			sTypewriter = Typeface.createFromAsset(context.getAssets(), FONT_TYPEWRITER);
-			callback.run(true);
 		}
+
+		callback.run(sTypewriter);
 	}
 
 	//* ============= Images ============= *//
@@ -298,25 +296,14 @@ public class World {
 
 	//* ============= Stage ============== *//
 
-	public static Paint sPaint = new Paint();
+	public static final String SCORE_FORMAT = "%s\n%06d";
 
-	private static Activity sActivity;
-	private static View sGameLayout;
+	public static Paint sPaint = new Paint();
 	private static GameTask sGameTask;
-	private static TextView sScoreView;
 
 	private static int sScore = 0;
 	private static int sWidth;
 	private static int sHeight;
-
-	public static final void loadContentView(Activity activity) {
-		sGameLayout = (View) activity.findViewById(R.id.activity_game_layout);
-		sScoreView = (TextView) activity.findViewById(R.id.score_textview);
-		sScoreView.setText(String.valueOf(0));
-		sScoreView.setTypeface(sTypewriter);
-
-		sActivity = activity;
-	}
 
 	public static final void initWithSurfaceView(final Surface view) {
 		sScore = 0;
@@ -331,30 +318,12 @@ public class World {
 		Log.i("STAGE", "initWithSurfaceView " + String.valueOf(getWidth()) + "x" + String.valueOf(getHeight()));
 	}
 
-	public static Activity getActivity() {
-		return sActivity;
-	}
-
 	public static final int getWidth() {
 		return sWidth;
 	}
 
 	public static final int getHeight() {
 		return sHeight;
-	}
-
-	public static final void setBackgroundDayTime() {
-		setGameBackground(R.drawable.bg_game_1);
-	}
-
-	public static final void setBackgroundNightTime() {
-		setGameBackground(R.drawable.bg_game_2);
-	}
-
-	public static final void setGameBackground(final int id) {
-		sActivity.runOnUiThread(() -> {
-			sGameLayout.setBackgroundResource(id);
-		});
 	}
 
 	public static boolean isGameLoopRunning() {
@@ -373,12 +342,19 @@ public class World {
 
 	public static final void stopGameLoop() {
 		sGameTask.stopTask();
+		sMediaPlayerTask.stop();
+		releaseSoundPool();
 	}
 
 	public static final void updateScore() {
 		sScore++;
-		sActivity.runOnUiThread(() -> {
-			sScoreView.setText(String.valueOf(sScore));
-		});
+	}
+
+	public static final int getScore() {
+		return sScore;
+	}
+
+	public static final void saveScoreToPreferences(final Context context) {
+		Preferences.setScore(context, sScore);
 	}
 }

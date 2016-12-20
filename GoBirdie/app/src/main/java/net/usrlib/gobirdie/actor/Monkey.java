@@ -11,7 +11,7 @@ import net.usrlib.gobirdie.game.World;
 import net.usrlib.gobirdie.util.NumUtil;
 
 public class Monkey extends GameObject {
-	private static final float DEFAULT_VELOCITY = .5f;
+	private static final float DEFAULT_VELOCITY = 5.0f;
 	private static final int TIME_OFFSET = 100;
 	private final int sAnimationFrameRate = 10;
 

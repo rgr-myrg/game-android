@@ -61,4 +61,5 @@
 
 	</LinearLayout>
 
+	<include layout="@layout/smart_banner_ad_view" />
 </RelativeLayout>

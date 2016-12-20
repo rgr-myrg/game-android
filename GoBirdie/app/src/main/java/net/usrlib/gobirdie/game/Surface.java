@@ -10,11 +10,24 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class Surface extends SurfaceView {
-	private boolean mHasSurfaceCreated;
-	private boolean mIsGameOver;
+	private boolean mHasSurfaceCreated = false;
+	private boolean mIsGameOver = false;
+	private boolean mIsContinue = false;
 
-	public Surface(Context context) {
+	private SurfaceCallback callback = null;
+
+	public interface SurfaceCallback {
+		void onSurfaceCreated();
+		void onSurfaceDestroyed();
+		void onScoreUpdate(int score);
+		void onGameOver(int score);
+		void onReadyToContinue();
+	}
+
+	public Surface(Context context, SurfaceCallback callback) {
 		super(context);
+
+		this.callback = callback;
 
 		setZOrderOnTop(true);
 		getHolder().setFormat(PixelFormat.TRANSPARENT);
@@ -28,11 +41,13 @@ public class Surface extends SurfaceView {
 					@Override
 					public void surfaceCreated(SurfaceHolder holder) {
 						onSurfaceCreated();
+						callback.onSurfaceCreated();
 					}
 
 					@Override
 					public void surfaceDestroyed(SurfaceHolder holder) {
 						onSurfaceDestroyed();
+						callback.onSurfaceDestroyed();
 					}
 				}
 		);
@@ -67,11 +82,13 @@ public class Surface extends SurfaceView {
 		performClick();
 
 		if (mIsGameOver) {
-			// Restart Game
-			mHasSurfaceCreated = false;
+			// Signal PlayActivity the user has tapped on the screen
+			// and is ready to continue.
+			if (mIsContinue) {
+				callback.onReadyToContinue();
+			}
 
-			onSurfaceCreated();
-			return true;
+			return false;
 		}
 
 		if (!World.isGameLoopRunning()) {
@@ -84,29 +101,9 @@ public class Surface extends SurfaceView {
 	}
 
 	public void onCanvasDraw(final Canvas canvas) {
-//		if (!World.isEventqueueBufferReady()) {
-//			return;
-//		}
-//
-//
-//		final ArrayList<PositionCoordinates> positions = World.getNextEventQueueItem();
-//
-//		if (positions == null) {
-//			return;
-//		}
-//
-//		PositionCoordinates e = positions.get(1);
-//		World.sEagle.moveWithPositionCoordinates(e);
-
 		canvas.drawColor(0, PorterDuff.Mode.CLEAR);
 		World.drawActors(canvas);
 	}
-
-//	public void onUpdateWithDelta(int delta) {
-//		Log.d("Surface", "delta: " + String.valueOf(delta));
-//		World.sEagle.updateWithDelta(delta);
-//		onUpdate();
-//	}
 
 	public void onUpdate() {
 		World.sBird.update();
@@ -121,6 +118,7 @@ public class Surface extends SurfaceView {
 
 		if (World.sBird.intersectsWith(World.sFruit) && !World.sBird.hasFruit()) {
 			World.updateScore();
+			callback.onScoreUpdate(World.getScore());
 
 			World.playTone1(getContext());
 			World.sBird.setHasFruit(true);
@@ -132,6 +130,7 @@ public class Surface extends SurfaceView {
 
 		if (World.sBird.intersectsWith(World.sBirdhouse) && World.sBird.hasFruit()) {
 			World.updateScore();
+			callback.onScoreUpdate(World.getScore());
 
 			World.playTone2(getContext());
 			//birdhouse.disable();
@@ -159,10 +158,19 @@ public class Surface extends SurfaceView {
 		}
 
 		if (World.sBird.hasCrashed()) {
-
 			mIsGameOver = true;
-			World.playPunch(getContext());
-			//Facade.displayScoreTable();
+			onGameOver();
 		}
+	}
+
+	public void playReadyToContinue() {
+		mIsContinue = true;
+	}
+
+	private void onGameOver() {
+		World.playPunch(getContext());
+		World.saveScoreToPreferences(getContext());
+
+		callback.onGameOver(World.getScore());
 	}
 }
