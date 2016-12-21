@@ -163,7 +163,7 @@ public class Surface extends SurfaceView {
 		}
 	}
 
-	public void playReadyToContinue() {
+	public void playerReadyToContinue() {
 		mIsContinue = true;
 	}
 

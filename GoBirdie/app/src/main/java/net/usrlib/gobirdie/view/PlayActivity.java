@@ -140,7 +140,7 @@ public class PlayActivity extends Activity implements Surface.SurfaceCallback {
 
 		mHandler.postDelayed(() -> {
 			mContinueButton.setVisibility(View.VISIBLE);
-			mSurface.playReadyToContinue();
+			mSurface.playerReadyToContinue();
 		}, mContinueInterval);
 	}
 }

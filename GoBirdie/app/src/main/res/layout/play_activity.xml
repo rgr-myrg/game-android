@@ -28,7 +28,7 @@
 			android:textColor="@color/colorBlack"
 			android:textSize="@dimen/button_text_size"/>
 
-		<include layout="@layout/score_cardview" android:visibility="invisible"/>
+		<include layout="@layout/score_card_view" android:visibility="invisible"/>
 
 		<Button
 			android:id="@+id/btnContinue"

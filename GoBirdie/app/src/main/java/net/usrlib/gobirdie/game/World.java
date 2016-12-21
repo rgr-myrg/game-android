@@ -39,12 +39,12 @@ public class World {
 
 	//* ========== Game Objects ========== *//
 
-	public static Bird sBird;
-	public static Birdhouse sBirdhouse;
-	public static Eagle sEagle;
-	public static Fruit sFruit;
-	public static Monkey sMonkey;
-	public static Snake sSnake;
+	public static Bird sBird = null;
+	public static Birdhouse sBirdhouse = null;
+	public static Eagle sEagle = null;
+	public static Fruit sFruit = null;
+	public static Monkey sMonkey = null;
+	public static Snake sSnake = null;
 
 	public static final void loadActors(final Context context) {
 		sBird = new Bird(context);
@@ -90,17 +90,21 @@ public class World {
 
 	//* ============= Images ============= *//
 
-	public static Drawable sCherry;
-	public static Drawable sGrapes;
-	public static Drawable sOrange;
-	public static Drawable sPear;
-
-	public static Bitmap sBirdRight;
-	public static Bitmap sBirdLeft;
-	public static Bitmap sBirdDown;
+	public static Drawable sCherry  = null;
+	public static Drawable sGrapes  = null;
+	public static Drawable sOrange  = null;
+	public static Drawable sPear    = null;
+	public static Bitmap sBirdRight = null;
+	public static Bitmap sBirdLeft  = null;
+	public static Bitmap sBirdDown  = null;
 
 	public static final void loadImages(Context context) {
 		final Resources resources = context.getResources();
+
+		// Check if already loaded.
+		if (sCherry != null && sBirdLeft != null) {
+			return;
+		}
 
 		// Use getResources() to support API 10. context.getDrawable requires API 21!
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -122,12 +126,16 @@ public class World {
 
 	//* ========== Music Player ========== *//
 
-	private static AssetFileDescriptor sFileTrack;
-	private static MediaPlayerTask sMediaPlayerTask;
+	private static AssetFileDescriptor sFileTrack   = null;
+	private static MediaPlayerTask sMediaPlayerTask = null;
 
 	public static final void loadMusic(Context context) {
-		try {
+		// Check if already loaded.
+		if (sFileTrack != null && sMediaPlayerTask != null) {
+			return;
+		}
 
+		try {
 			final AssetManager assetManager = context.getAssets();
 			sFileTrack = assetManager.openFd(SOUND_TRACK);
 			sMediaPlayerTask = new MediaPlayerTask(sFileTrack);
@@ -185,7 +193,7 @@ public class World {
 	private static AssetFileDescriptor sFileChirp;
 	private static AssetFileDescriptor sFileSlap;
 
-	private static SoundPool sSoundPool;
+	private static SoundPool sSoundPool = null;
 
 	private static int sAlarmId;
 	private static int sTone1Id;
@@ -198,6 +206,11 @@ public class World {
 	private static boolean sIsReady;
 
 	public static final void loadSounds(Context context) {
+		// Check if already loaded.
+		if (sSoundPool != null) {
+			return;
+		}
+
 		try {
 
 			final AssetManager assetManager = context.getAssets();
@@ -211,15 +224,9 @@ public class World {
 
 			// Use SoundPool to support API's < 23 as required by SoundPool.Builder
 			sSoundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
-
-			sSoundPool.setOnLoadCompleteListener(
-					new SoundPool.OnLoadCompleteListener() {
-						public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-							sIsReady = true;
-							//GameEvent.SoundLoaded.notifySuccess();
-						}
-					}
-			);
+			sSoundPool.setOnLoadCompleteListener((SoundPool soundPool, int sampleId, int status) -> {
+				sIsReady = true;
+			});
 
 			sAlarmId = sSoundPool.load(sFileAlarm, 1);
 			sTone1Id = sSoundPool.load(sFileTone1, 1);
