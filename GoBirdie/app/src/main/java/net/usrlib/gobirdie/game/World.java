@@ -132,9 +132,11 @@ public class World {
 	public static final void loadMusic(Context context) {
 		// Check if already loaded.
 		if (sFileTrack != null && sMediaPlayerTask != null) {
+			Log.d("World", "loadMusic already loaded.");
 			return;
 		}
 
+		Log.d("World", "loadMusic first time.");
 		try {
 			final AssetManager assetManager = context.getAssets();
 			sFileTrack = assetManager.openFd(SOUND_TRACK);
@@ -349,7 +351,6 @@ public class World {
 
 	public static final void stopGameLoop() {
 		sGameTask.stopTask();
-		sMediaPlayerTask.stop();
 		releaseSoundPool();
 	}
 

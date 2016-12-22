@@ -28,8 +28,8 @@ public class PlayActivity extends Activity implements Surface.SurfaceCallback {
 
 	private RelativeLayout.LayoutParams mLayoutParams;
 	private Surface mSurface;
-
 	private CardView mScoreCardView;
+
 	private TextView mTotalScoreView;
 	private TextView mHighScoreView;
 	private TextView mLifeScoreView;
@@ -94,7 +94,6 @@ public class PlayActivity extends Activity implements Surface.SurfaceCallback {
 		mSurface.onSurfaceDestroyed();
 		mSurface.setVisibility(View.GONE);
 
-		finish();
 		startActivity(new Intent(this, HomeActivity.class));
 	}
 
@@ -139,7 +138,7 @@ public class PlayActivity extends Activity implements Surface.SurfaceCallback {
 		mLifeScoreView.setText(lifeScore);
 
 		mHandler.postDelayed(() -> {
-			mContinueButton.setVisibility(View.VISIBLE);
+			mContinueButton.setVisibility(android.view.View.VISIBLE);
 			mSurface.playerReadyToContinue();
 		}, mContinueInterval);
 	}

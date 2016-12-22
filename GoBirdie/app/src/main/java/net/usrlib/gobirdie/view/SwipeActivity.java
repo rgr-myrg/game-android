@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdView;
 import com.mindorks.placeholderview.SwipeDecor;
@@ -30,6 +32,14 @@ import java.util.List;
 
 public class SwipeActivity extends AppCompatActivity {
 	private SwipePlaceHolderView mSwipeView = null;
+	private TextView mSwipeArrow = null;
+	private TextView mSkipIntro  = null;
+
+	private Handler mHandler = new Handler();
+
+	private int mHandlerInterval = 1000;
+	private int mMaxHandlerCount = 6;
+	private int mHandlerCount = 0;
 
 	private List<SceneInfo> mSceneInfo = new ArrayList<>(Arrays.asList(
 			new SceneInfo(R.drawable.scene_1, R.string.scene1Text),
@@ -50,13 +60,19 @@ public class SwipeActivity extends AppCompatActivity {
 		AdRequestUtil.makeAdRequest((AdView) findViewById(R.id.adView));
 
 		initSwipeView();
+		loadGameAssets();
+		showSkipIntroText();
+		showSwipeArrow(true);
 	}
 
 	protected void initSwipeView() {
 		final int bottomMargin = ScreenMetrics.dpToPx(160);
 		final Point windowSize = ScreenMetrics.getDisplaySize(getWindowManager());
 
-		mSwipeView = (SwipePlaceHolderView)findViewById(R.id.swipe_holder_view);
+		mSwipeArrow = (TextView) findViewById(R.id.swipe_arrow);
+		mSkipIntro  = (TextView) findViewById(R.id.skip_intro);
+		mSwipeView  = (SwipePlaceHolderView) findViewById(R.id.swipe_holder_view);
+
 		mSwipeView.getBuilder()
 				.setDisplayViewCount(3)
 				.setHeightSwipeDistFactor(10)
@@ -66,7 +82,7 @@ public class SwipeActivity extends AppCompatActivity {
 						.setViewWidth(windowSize.x)
 						.setViewHeight(windowSize.y - bottomMargin)
 						.setViewGravity(Gravity.TOP)
-						.setPaddingTop(20)
+						//.setPaddingTop(20)
 						.setRelativeScale(0.01f)
 				);
 
@@ -75,8 +91,6 @@ public class SwipeActivity extends AppCompatActivity {
 					new SceneItem(getApplicationContext(), sceneInfo, mSwipeView)
 			);
 		}
-
-		loadGameAssets();
 	}
 
 	protected void loadGameAssets() {
@@ -86,14 +100,28 @@ public class SwipeActivity extends AppCompatActivity {
 			World.loadFonts(context, typeface -> {
 				runOnUiThread(() -> {
 					((Button) findViewById(R.id.btnStart)).setTypeface(typeface);
+					mSkipIntro.setTypeface(typeface);
 				});
 			});
 
-			World.loadImages(context);
-			World.loadSounds(context);
 			World.loadMusic(context);
-			World.loadActors(context);
 		}).start();
+	}
+
+	protected void showSwipeArrow(final boolean isVisible) {
+		mHandler.postDelayed(() -> {
+			if (mHandlerCount < mMaxHandlerCount) {
+				mSwipeArrow.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+				mHandlerCount++;
+				showSwipeArrow(!isVisible);
+			}
+		}, mHandlerInterval);
+	}
+
+	protected void showSkipIntroText() {
+		mHandler.postDelayed(() -> {
+			mSkipIntro.setVisibility(View.VISIBLE);
+		}, 5000);
 	}
 
 	public void startHomeActivity(View view) {

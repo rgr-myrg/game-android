@@ -22,7 +22,7 @@ import net.usrlib.gobirdie.R;
  * Created by rgr-myrg on 12/21/16.
  */
 
-@Layout(R.layout.item_card_view)
+@Layout(R.layout.swipe_card_view)
 public class SceneItem {
 	@View(R.id.sceneImageView)
 	private ImageView mImageView;
@@ -53,7 +53,6 @@ public class SceneItem {
 
 	@Click(R.id.sceneImageView)
 	private void onClick() {
-		mSwipeView.addView(this);
 	}
 
 	@SwipeOut

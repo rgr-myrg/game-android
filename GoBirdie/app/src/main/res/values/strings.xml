@@ -20,12 +20,15 @@
 	<string name="txtOptsMusicLabel">Music</string>
 	<string name="txtOptsSoundLabel">Sound Fx</string>
 
-	<string name="scene1Text">Life as Go Birdie is simple and pretty. Not a worry in the world.</string>
+	<string name="scene1Text">Life as Go Birdie is simple and carefree. Not a worry in the world.</string>
 	<string name="scene2Text">You just need lots of fruit to stay happy.</string>
 	<string name="scene3Text">Tap to fly and grab as much fruit as you can!</string>
 	<string name="scene4Text">Swipe to fly up up up!</string>
 	<string name="scene5Text">Don\'t forget to bring back fruit to your birdhouse.</string>
 	<string name="scene6Text">Be careful of Pete the Monkey and his famous monkey slap.</string>
-	<string name="scene7Text">Above all, stay away from Sgt. Eagle Speagle. He\'s fierce!</string>
+	<string name="scene7Text">Above all, stay away from Sgt. Eagle Speagle. He\'s trouble!</string>
 	<string name="scene8Text">Special guest appearance: Blake the Snake.</string>
+
+	<string name="swipe_arrow">\u2192</string>
+	<string name="skip_intro">[Skip Intro]</string>
 </resources>
